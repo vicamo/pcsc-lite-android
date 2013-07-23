@@ -37,6 +37,10 @@
 #define PCSC_API
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 enum {
 	DEBUGLOG_NO_DEBUG = 0,
 	DEBUGLOG_SYSLOG_DEBUG,
@@ -107,6 +111,10 @@ void DebugLogSetLogType(const int);
 int DebugLogSetCategory(const int);
 void DebugLogCategory(const int, const unsigned char *, const int);
 PCSC_API void DebugLogSetLevel(const int level);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif							/* __debuglog_h__ */
 

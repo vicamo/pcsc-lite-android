@@ -111,6 +111,10 @@ AC_CHECK_FUNCS(daemon flock getopt_long nanosleep strerror vsnprintf)
 # strlcpy, strlcat from OpenBSD
 AC_CHECK_FUNCS(strlcpy strlcat)
 
+# Android has no stpcpy and mqueue.h
+AC_CHECK_FUNCS(stpcpy)
+AC_CHECK_HEADERS([mqueue.h])
+
 # C Compiler features
 AC_C_INLINE
 if test "$GCC" = "yes"; then

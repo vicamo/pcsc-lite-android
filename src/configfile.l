@@ -91,7 +91,7 @@ int evaluatetoken(char *pcToken)
 			{
 				size_t n, p;
 
-				pcFriendlyname = malloc(strlen(pcCurrent) + 1);
+				pcFriendlyname = (char*) malloc(strlen(pcCurrent) + 1);
 				for (n = 0, p = 0; n < strlen(pcCurrent); n++)
 				{
 					if (pcCurrent[n] != '"')
@@ -187,13 +187,14 @@ int evaluatetoken(char *pcToken)
 		{
 			/* one real reader and one end marker */
 			reader_list_size = 2;
-			reader_list = malloc(reader_list_size * sizeof(SerialReader));
+			reader_list = (SerialReader*) malloc(reader_list_size *
+				sizeof(SerialReader));
 		}
 		else
 		{
 			reader_list_size++;
-			reader_list = realloc(reader_list, reader_list_size *
-				sizeof(SerialReader));
+			reader_list = (SerialReader*) realloc(reader_list,
+				reader_list_size * sizeof(SerialReader));
 		}
 
 		/* end marker */

@@ -32,7 +32,7 @@
 #include <sys/stat.h>
 #include <sys/socket.h>
 #include <sys/un.h>
-#include <sys/fcntl.h>
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -43,7 +43,7 @@
 #include <stddef.h>
 #include <limits.h>
 
-#if defined(__linux__)
+#ifdef HAVE_MQUEUE_H
 #include <mqueue.h>
 #endif
 
@@ -379,7 +379,7 @@ _sd_export_ int sd_is_socket_unix(int fd, int type, int listening, const char *p
 }
 
 _sd_export_ int sd_is_mq(int fd, const char *path) {
-#if !defined(__linux__)
+#if !defined(HAVE_MQUEUE_H)
         return 0;
 #else
         struct mq_attr attr;
@@ -400,7 +400,11 @@ _sd_export_ int sd_is_mq(int fd, const char *path) {
                 if (fstat(fd, &a) < 0)
                         return -errno;
 
+#ifdef HAVE_STPCPY
                 strncpy(stpcpy(fpath, "/dev/mqueue"), path, sizeof(fpath) - 12);
+#else
+                snprintf(fpath, sizeof(fpath) - 1, "/dev/mqueue/%s", path);
+#endif
                 fpath[sizeof(fpath)-1] = 0;
 
                 if (stat(fpath, &b) < 0)

@@ -81,6 +81,9 @@
 #include <sys/types.h>
 #include <fcntl.h>
 #include <unistd.h>
+#if defined(ANDROID)
+#include <sys/socket.h>
+#endif
 #include <sys/un.h>
 #include <errno.h>
 #include <stddef.h>
